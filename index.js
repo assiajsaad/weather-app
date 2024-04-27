@@ -22,9 +22,8 @@ async function getWeather(city) {
       { mode: "cors" }
     );
     const result = await data.json();
-    console.log(result);
-    const ui = uiCreator(result);
-    uiHandler(ui);
+
+    uiCreator(result);
   } catch (error) {}
 }
 
@@ -44,12 +43,36 @@ function uiHandler(city) {
 }
 
 function uiCreator(data) {
-  const div = document.createElement("div");
-  div.className = "city";
-  const cityName = document.createElement("div");
+  const name = document.querySelector(".name");
+  name.textContent = data.location.name;
 
-  cityName.textContent = data.location.name;
-  div.appendChild(cityName);
+  const region = document.querySelector(".region");
+  region.textContent = data.location.region;
 
-  return div;
+  const country = document.querySelector(".country");
+  country.textContent = data.location.country;
+
+  const timeZone = document.querySelector(".timezone");
+  timeZone.textContent = data.location.tz_id;
+
+  const localTime = document.querySelector(".local-time");
+  localTime.textContent = data.location.localtime;
+
+  const lastUpdated = document.querySelector(".last-updated");
+  lastUpdated.textContent = data.current.last_updated;
+
+  const tempC = document.querySelector(".temp-c");
+  tempC.textContent = data.current.temp_c;
+
+  const tempF = document.querySelector(".temp-f");
+  tempF.textContent = data.current.temp_f;
+
+  const condition = document.querySelector(".condition");
+  condition.textContent = data.current.condition.text;
+
+  const conditionImg = document.querySelector(".condition-img");
+  conditionImg.src = data.current.condition.icon;
+
+  const humidity = document.querySelector(".humidity");
+  humidity.textContent = data.current.humidity;
 }
